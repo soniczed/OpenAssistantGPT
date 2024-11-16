@@ -4,8 +4,15 @@
         "src": "package.json",
         "use": "@vercel/next",
         "config": {
-          "installCommand": "npm install --legacy-peer-deps"
+          "installCommand": "npm install --legacy-peer-deps",
+          "buildCommand": "npm run build"
         }
       }
-    ]
+    ],
+    "build": {
+      "env": {
+        "SKIP_CONTENTLAYER_VALIDATE": "true",
+        "NEXT_TELEMETRY_DISABLED": "1"
+      }
+    }
   }

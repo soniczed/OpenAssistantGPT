@@ -142,6 +142,12 @@ export const Page = defineDocumentType(() => ({
     computedFields,
 }))
 
+/** @type {import('rehype-pretty-code').Options} */
+const options = {
+    theme: 'github-dark',
+    keepBackground: true,
+}
+
 export default makeSource({
     contentDirPath: "./content",
     documentTypes: [Page, Doc, Guide, Post, Author],
@@ -151,22 +157,7 @@ export default makeSource({
             rehypeSlug,
             [
                 rehypePrettyCode,
-                {
-                    theme: "github-dark",
-                    onVisitLine(node) {
-                        // Prevent lines from collapsing in `display: grid` mode, and allow empty
-                        // lines to be copy/pasted
-                        if (node.children.length === 0) {
-                            node.children = [{ type: "text", value: " " }]
-                        }
-                    },
-                    onVisitHighlightedLine(node) {
-                        node.properties.className.push("line--highlighted")
-                    },
-                    onVisitHighlightedWord(node) {
-                        node.properties.className = ["word--highlighted"]
-                    },
-                },
+                options,
             ],
             [
                 rehypeAutolinkHeadings,
